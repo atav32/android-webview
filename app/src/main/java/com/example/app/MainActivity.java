@@ -15,6 +15,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import androidx.browser.customtabs.CustomTabsIntent;
+
 public class MainActivity extends Activity {
 
     private WebView mWebView;
@@ -62,6 +64,15 @@ public class MainActivity extends Activity {
         });
 
         String url = "https://identity.stripedemos.com";
+
+        /*
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        // set toolbar color and/or setting custom actions before invoking build()
+        // Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
+        CustomTabsIntent customTabsIntent = builder.build();
+        // and launch the desired Url with CustomTabsIntent.launchUrl()
+        customTabsIntent.launchUrl(this, Uri.parse(url));
+         */
 
         // REMOTE RESOURCE
         mWebView.loadUrl(url);
