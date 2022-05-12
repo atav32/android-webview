@@ -27,10 +27,44 @@ public class MainActivity extends Activity {
         mWebView = findViewById(R.id.activity_main_webview);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowFileAccessFromFileURLs(true);
+        webSettings.setAllowUniversalAccessFromFileURLs(true);
+
         mWebView.setWebViewClient(new MyWebViewClient());
 
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            // Grant permissions for cam
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                Log.d(TAG, "onPermissionRequest");
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.M)
+                    @Override
+                    public void run() {
+                        Log.d(TAG, request.getOrigin().toString());
+                        if(request.getOrigin().toString().equals("file:///")) {
+                            Log.d(TAG, "GRANTED");
+                            request.grant(request.getResources());
+                        } else {
+                            Log.d(TAG, "DENIED");
+                            request.deny();
+                        }
+                    }
+                });
+            }
+
+            // forward console logs
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                android.util.Log.d("WebView", consoleMessage.message());
+                return true;
+            }
+        });
+
+        String url = "https://identity.stripedemos.com";
+
         // REMOTE RESOURCE
-        // mWebView.loadUrl("https://example.com");
+        mWebView.loadUrl(url);
 
         // LOCAL RESOURCE
         // mWebView.loadUrl("file:///android_asset/index.html");
