@@ -1,8 +1,17 @@
 package com.example.app;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.ConsoleMessage;
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
